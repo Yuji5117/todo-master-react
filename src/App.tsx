@@ -1,7 +1,7 @@
 export const App: React.FC = () => {
   return (
     <>
-      <div>Todo Master</div>
+      <div className="text-red-500">Todo Master</div>
     </>
   )
 }
