@@ -3,6 +3,8 @@ import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import importPlugin from "eslint-plugin-import";
+import prettier from "eslint-plugin-prettier";
+import prettierConfig from "eslint-config-prettier";
 import pluginUnusedImports from "eslint-plugin-unused-imports";
 import tseslint from "typescript-eslint";
 import { globalIgnores } from "eslint/config";
@@ -11,7 +13,7 @@ export default tseslint.config([
   globalIgnores(["dist"]),
   {
     files: ["**/*.{ts,tsx}"],
-    plugins: { "unused-imports": pluginUnusedImports },
+    plugins: { "unused-imports": pluginUnusedImports, prettier },
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
@@ -69,4 +71,5 @@ export default tseslint.config([
       },
     },
   },
+  prettierConfig,
 ]);
