@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary: #3b82f6;
+  --color-primary: #60a5fa;
   --color-primary-hover: #3b82f6;
   --color-secondary: #6b7280;
   --color-secondary-hover: #4b5563;
