@@ -13,7 +13,7 @@ const dummyTodos: Todo[] = Array.from({ length: 20 }, (_, i) => ({
 export const App: React.FC = () => {
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <div className="m-auto flex h-[620px] w-2/4 flex-col rounded-md border border-[#E5E7EB] shadow-md">
+      <div className="m-auto flex h-[620px] w-2/4 flex-col overflow-hidden rounded-md border border-[#E5E7EB] shadow-md">
         <div className="bg-primary flex h-12 items-center justify-center">
           <h1 className="text-xl font-semibold text-white">Todo Master</h1>
         </div>
@@ -28,4 +28,3 @@ export const App: React.FC = () => {
     </div>
   )
 }
-
