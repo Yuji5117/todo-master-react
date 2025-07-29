@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { createNewTodo } from '../api/todo'
 
-import type { CreateNewTodo } from '../types'
+import type { CreateNewTodoPayload } from '../types'
 
 export type ModalProps = {
   toggle: (value: boolean) => void
@@ -23,7 +23,7 @@ export const Modal: React.FC<ModalProps> = ({ toggle }) => {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const newTodo: CreateNewTodo = {
+    const newTodo: CreateNewTodoPayload = {
       title: title,
       memo: memo,
     }

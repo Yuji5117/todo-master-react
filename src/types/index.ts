@@ -19,7 +19,9 @@ export type Todo = Entity<{
   isCompleted: boolean
 }>
 
-export type CreateNewTodo = Pick<Todo, 'title' | 'memo'>
+export type CreateNewTodoPayload = Pick<Todo, 'title' | 'memo'>
+
+export type UpdateTodoCompletionPayload = Pick<Todo, 'id' | 'isCompleted'>
 
 export type ApiResponse<T> = {
   data: T

@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid'
 
 import { paths } from '../config/paths'
 
-import type { ApiResponse, CreateNewTodo, Todo } from '../types'
+import type { ApiResponse, CreateNewTodoPayload, Todo } from '../types'
 
 const todos: Todo[] = [
   {
@@ -62,7 +62,7 @@ export const handlers = [
   }),
 
   http.post(paths.app.todos.path, async ({ request }) => {
-    const newTodo = (await request.json()) as CreateNewTodo
+    const newTodo = (await request.json()) as CreateNewTodoPayload
     const todoWithId: Todo = {
       ...newTodo,
       id: uuid(),
