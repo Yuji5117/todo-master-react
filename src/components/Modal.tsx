@@ -14,12 +14,12 @@ export const Modal: React.FC<ModalProps> = ({ toggle }) => {
       >
         <button
           onClick={() => toggle(false)}
-          className="absolute top-3 right-6 text-2xl font-bold text-gray-400 transition-colors duration-200 hover:text-gray-600"
+          className="absolute top-3 right-6 cursor-pointer text-2xl font-bold text-gray-400 transition-colors duration-200 hover:text-gray-600"
         >
           ×
         </button>
         <h2 className="mb-8 text-center text-2xl font-semibold">Create New Todo</h2>
-        <form action="" className="flex flex-col space-y-8 mb-4">
+        <form action="" className="mb-4 flex flex-col space-y-8">
           <input
             type="text"
             placeholder="Enter your todo"
