@@ -3,9 +3,7 @@ import { v4 as uuid } from 'uuid'
 
 import { paths } from '../config/paths'
 
-import type { ApiResponse, Todo } from '../types'
-
-type CreateNewTodo = Omit<Todo, 'id'>
+import type { ApiResponse, CreateNewTodo, Todo } from '../types'
 
 const todos: Todo[] = [
   {
