@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw'
+import { delay, http, HttpResponse } from 'msw'
 import { v4 as uuid } from 'uuid'
 
 import { paths } from '../config/paths'
@@ -53,7 +53,8 @@ const todos: Todo[] = [
 ]
 
 export const handlers = [
-  http.get(paths.app.todos.path, () => {
+  http.get(paths.app.todos.path, async () => {
+    await delay()
     const response: ApiResponse<Todo[]> = {
       data: todos,
       message: 'Fetched successfully',
