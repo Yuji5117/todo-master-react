@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { FloatingActionButton } from './components/FloatingActionButton'
+import { Modal } from './components/Modal'
 import { TodoCard } from './components/TodoCard'
 import { paths } from './config/paths'
 
@@ -8,6 +9,7 @@ import type { Todo } from './types'
 
 export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([])
+  const [toggleModal, setToggleModal] = useState<boolean>(false)
 
   useEffect(() => {
     const getTodos = async () => {
@@ -40,8 +42,9 @@ export const App: React.FC = () => {
             </div>
           ))}
         </div>
-        <FloatingActionButton onClick={() => console.log('click')} />
+        <FloatingActionButton onClick={() => setToggleModal(true)} />
       </div>
+      {toggleModal && <Modal toggle={setToggleModal} />}
     </div>
   )
 }
