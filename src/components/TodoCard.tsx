@@ -23,13 +23,18 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
     mutation.mutate({ id, isCompleted: checked })
 
   return (
-    <div className="m-auto flex w-3/4 justify-between rounded-md bg-white px-5 py-3 shadow-md">
-      <div className="">
-        <h2 className="text-lg">{title}</h2>
-        {memo && <p className="text-sm font-light text-[#111827]">{memo}</p>}
-      </div>
-      <div className="flex items-center">
-        <CheckBox checked={isCompleted} onChange={(checked: boolean) => handleCheck(id, checked)} />
+    <div className="m-auto flex w-3/4 justify-between rounded-md bg-white px-4 py-3 shadow-md">
+      <div className="flex space-x-4">
+        <div className="flex items-center">
+          <CheckBox
+            checked={isCompleted}
+            onChange={(checked: boolean) => handleCheck(id, checked)}
+          />
+        </div>
+        <div className="flex flex-col">
+          <h2 className="text-lg">{title}</h2>
+          {memo && <p className="text-sm font-light text-[#111827]">{memo}</p>}
+        </div>
       </div>
     </div>
   )
