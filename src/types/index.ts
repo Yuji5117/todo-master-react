@@ -18,3 +18,10 @@ export type Todo = Entity<{
   memo?: string
   isCompleted: boolean
 }>
+
+export type ApiResponse<T> = {
+  data: T
+  message: string
+  error?: string | null
+  statusCode: number
+}

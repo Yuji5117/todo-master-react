@@ -5,6 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import importPlugin from 'eslint-plugin-import'
 import prettierConfig from 'eslint-config-prettier'
 import pluginUnusedImports from 'eslint-plugin-unused-imports'
+import pluginQuery from '@tanstack/eslint-plugin-query'
 import tseslint from 'typescript-eslint'
 import { globalIgnores } from 'eslint/config'
 
@@ -12,7 +13,7 @@ export default tseslint.config([
   globalIgnores(['dist', 'vite.config.ts']),
   {
     files: ['**/*.{ts,tsx}'],
-    plugins: { 'unused-imports': pluginUnusedImports },
+    plugins: { 'unused-imports': pluginUnusedImports, '@tanstack/query': pluginQuery },
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,

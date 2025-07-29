@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid'
 
 import { paths } from '../config/paths'
 
-import type { Todo } from '../types'
+import type { ApiResponse, Todo } from '../types'
 
 type CreateNewTodo = Omit<Todo, 'id'>
 
@@ -54,7 +54,12 @@ const todos: Todo[] = [
 
 export const handlers = [
   http.get(paths.app.todos.path, () => {
-    return HttpResponse.json(todos)
+    const response: ApiResponse<Todo[]> = {
+      data: todos,
+      message: 'Fetched successfully',
+      statusCode: 200,
+    }
+    return HttpResponse.json(response)
   }),
 
   http.post(paths.app.todos.path, async ({ request }) => {

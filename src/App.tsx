@@ -1,33 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 
+import { getTodos } from './api/todo'
 import { FloatingActionButton } from './components/FloatingActionButton'
 import { Modal } from './components/Modal'
 import { TodoCard } from './components/TodoCard'
-import { paths } from './config/paths'
-
-import type { Todo } from './types'
 
 export const App: React.FC = () => {
-  const [todos, setTodos] = useState<Todo[]>([])
   const [toggleModal, setToggleModal] = useState<boolean>(false)
+  const { isPending, data, isError, error } = useQuery({ queryKey: ['todos'], queryFn: getTodos })
 
-  useEffect(() => {
-    const getTodos = async () => {
-      try {
-        const response = await fetch(paths.app.todos.path, {
-          method: 'GET',
-        })
+  if (isPending) {
+    return <span>Loading...</span>
+  }
 
-        const decodedData = await response.json()
-
-        setTodos(decodedData)
-      } catch (error) {
-        console.log('error', error)
-      }
-    }
-
-    getTodos()
-  })
+  if (isError) {
+    return <span>Error: {error.message}</span>
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -36,7 +25,7 @@ export const App: React.FC = () => {
           <h1 className="text-xl font-semibold text-white">Todo Master</h1>
         </div>
         <div className="flex-1 flex-col space-y-4 overflow-auto py-8">
-          {todos.map(todo => (
+          {data.data.map(todo => (
             <div key={todo.id}>
               <TodoCard title={todo.title} memo={todo.memo} isCompleted={todo.isCompleted} />
             </div>
