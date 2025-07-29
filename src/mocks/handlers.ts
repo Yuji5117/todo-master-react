@@ -63,7 +63,12 @@ export const handlers = [
 
   http.post(paths.app.todos.path, async ({ request }) => {
     const newTodo = (await request.json()) as CreateNewTodo
-    const todoWithId: Todo = { ...newTodo, id: uuid(), createdAt: new Date().toISOString() }
+    const todoWithId: Todo = {
+      ...newTodo,
+      id: uuid(),
+      isCompleted: false,
+      createdAt: new Date().toISOString(),
+    }
     todos.push(todoWithId)
     return HttpResponse.json(todoWithId)
   }),

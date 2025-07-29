@@ -19,7 +19,7 @@ export type Todo = Entity<{
   isCompleted: boolean
 }>
 
-export type CreateNewTodo = Omit<Todo, 'id'>
+export type CreateNewTodo = Pick<Todo, 'title' | 'memo'>
 
 export type ApiResponse<T> = {
   data: T
