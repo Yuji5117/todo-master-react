@@ -1,16 +1,31 @@
+import { useEffect, useState } from 'react'
+
 import { TodoCard } from './components/TodoCard'
+import { paths } from './config/paths'
 
 import type { Todo } from './types'
 
-const dummyTodos: Todo[] = Array.from({ length: 20 }, (_, i) => ({
-  id: (i + 1).toString(),
-  createdAt: Date.now() - i * 1000 * 60,
-  title: `Todo Item ${i + 1}`,
-  memo: `This is a memo for Todo ${i + 1}`,
-  isCompleted: i % 2 === 0,
-}))
-
 export const App: React.FC = () => {
+  const [todos, setTodos] = useState<Todo[]>([])
+
+  useEffect(() => {
+    const getTodos = async () => {
+      try {
+        const response = await fetch(paths.app.todos.path, {
+          method: 'GET',
+        })
+
+        const decodedData = await response.json()
+
+        setTodos(decodedData)
+      } catch (error) {
+        console.log('error', error)
+      }
+    }
+
+    getTodos()
+  })
+
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="m-auto flex h-[620px] w-2/4 flex-col overflow-hidden rounded-md border border-[#E5E7EB] shadow-md">
@@ -18,7 +33,7 @@ export const App: React.FC = () => {
           <h1 className="text-xl font-semibold text-white">Todo Master</h1>
         </div>
         <div className="flex-1 flex-col space-y-4 overflow-auto py-8">
-          {dummyTodos.map(todo => (
+          {todos.map(todo => (
             <div key={todo.id}>
               <TodoCard title={todo.title} memo={todo.memo} isCompleted={todo.isCompleted} />
             </div>
