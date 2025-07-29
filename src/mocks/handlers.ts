@@ -72,4 +72,25 @@ export const handlers = [
     todos.push(todoWithId)
     return HttpResponse.json(todoWithId)
   }),
+
+  http.patch(`${paths.app.todos.path}:id`, async ({ request, params }) => {
+    const { id } = params
+    const { isCompleted } = (await request.json()) as { isCompleted: boolean }
+    const index = todos.findIndex(todo => id === todo.id)
+    if (index === -1)
+      return HttpResponse.json({
+        message: 'Todo not found',
+        error: 'Invalid ID',
+        data: null,
+        statusCode: 404,
+      })
+
+    todos[index].isCompleted = isCompleted
+
+    return HttpResponse.json({
+      data: todos[index],
+      message: 'Todo updated successfully',
+      statusCode: 200,
+    })
+  }),
 ]
