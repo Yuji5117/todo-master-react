@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { FloatingActionButton } from './components/FloatingActionButton'
 import { TodoCard } from './components/TodoCard'
 import { paths } from './config/paths'
 
@@ -28,7 +29,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <div className="m-auto flex h-[620px] w-2/4 flex-col overflow-hidden rounded-md border border-[#E5E7EB] shadow-md">
+      <div className="relative m-auto flex h-[620px] w-2/4 flex-col overflow-hidden rounded-md border border-[#E5E7EB] shadow-md">
         <div className="bg-primary flex h-12 items-center justify-center">
           <h1 className="text-xl font-semibold text-white">Todo Master</h1>
         </div>
@@ -39,6 +40,7 @@ export const App: React.FC = () => {
             </div>
           ))}
         </div>
+        <FloatingActionButton onClick={() => console.log('click')} />
       </div>
     </div>
   )
