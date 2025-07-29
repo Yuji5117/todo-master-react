@@ -27,7 +27,12 @@ export const App: React.FC = () => {
         <div className="flex-1 flex-col space-y-4 overflow-auto py-8">
           {data.data.map(todo => (
             <div key={todo.id}>
-              <TodoCard title={todo.title} memo={todo.memo} isCompleted={todo.isCompleted} />
+              <TodoCard
+                id={todo.id}
+                title={todo.title}
+                memo={todo.memo}
+                isCompleted={todo.isCompleted}
+              />
             </div>
           ))}
         </div>

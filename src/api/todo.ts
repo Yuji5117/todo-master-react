@@ -41,7 +41,7 @@ export const updateTodoCompletion = async (
 ): Promise<ApiResponse<Todo>> => {
   try {
     const { id, isCompleted } = payload
-    const response = await fetch(`${paths.app.todos.path}:${id}`, {
+    const response = await fetch(`${paths.app.todos.path}${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
