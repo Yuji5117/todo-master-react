@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
+import { Button } from './Button'
 import { CheckBox } from './CheckBox'
 import { updateTodoCompletion } from '../api/todo'
 
@@ -35,6 +36,9 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
           <h2 className="text-lg">{title}</h2>
           {memo && <p className="text-sm font-light text-[#111827]">{memo}</p>}
         </div>
+      </div>
+      <div className="flex items-center">
+        <Button text="Edit" onClick={() => console.log('click')} variant="primary" size="sm" />
       </div>
     </div>
   )
