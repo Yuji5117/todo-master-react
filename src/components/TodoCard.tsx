@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { clsx } from 'clsx'
 import { useState } from 'react'
 import { FaTrashAlt } from 'react-icons/fa'
 
@@ -42,7 +43,12 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
   }
 
   return (
-    <div className="m-auto flex mx-8 justify-between rounded-md bg-white px-4 py-3 shadow-md">
+    <div
+      className={clsx(
+        'm-auto mx-8 flex justify-between rounded-md px-4 py-3 shadow-md transition-colors duration-200',
+        isCompleted ? 'border border-green-300 bg-green-50' : 'bg-white',
+      )}
+    >
       <div className="flex space-x-4">
         <div className="flex items-center">
           <CheckBox
