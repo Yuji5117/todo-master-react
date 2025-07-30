@@ -79,7 +79,25 @@ export const updateTodoCompletion = async (
 
     return decodedData
   } catch (error) {
-    console.log('updateTodoCompletio error:', error)
+    console.log('updateTodoCompletion error:', error)
     throw new Error('Failed to update todo completion')
+  }
+}
+
+export const deleteTodo = async (id: string): Promise<ApiResponse<string>> => {
+  try {
+    const response = await fetch(`${paths.app.todos.path}${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const decodedData: ApiResponse<string> = await response.json()
+
+    return decodedData
+  } catch (error) {
+    console.log('deleteTodo error:', error)
+    throw new Error('Failed to delete todo')
   }
 }
