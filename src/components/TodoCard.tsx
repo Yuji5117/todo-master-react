@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
 
 import { Button } from './Button'
 import { CheckBox } from './CheckBox'
+import { Modal } from './Modal'
 import { updateTodoCompletion } from '../api/todos'
 
 export type TodoCardType = {
@@ -12,6 +14,7 @@ export type TodoCardType = {
 }
 
 export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompleted }) => {
+  const [toggleModal, setToggleModal] = useState<boolean>(false)
   const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: updateTodoCompletion,
@@ -38,8 +41,13 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
         </div>
       </div>
       <div className="flex items-center">
-        <Button text="Edit" onClick={() => console.log('click')} variant="primary" size="sm" />
+        <Button text="Edit" onClick={() => setToggleModal(true)} variant="primary" size="sm" />
       </div>
+      {toggleModal && (
+        <Modal onClose={() => setToggleModal(false)}>
+          <div>test</div>
+        </Modal>
+      )}
     </div>
   )
 }
