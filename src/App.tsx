@@ -17,41 +17,36 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="relative m-auto flex h-[620px] w-2/4 flex-col overflow-hidden rounded-md border border-[#E5E7EB] shadow-md">
-        <div className="bg-primary flex h-12 items-center justify-center">
-          <h1 className="text-xl font-semibold text-white">Todo Master</h1>
+    <>
+      {isPending ? (
+        <LoadingSpinner />
+      ) : data.data.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
+          <p className="mb-4 text-xl">You have no todos yet.</p>
+          <p className="text-sm">
+            Click the <span className="font-bold">+</span> button to add your first task.
+          </p>
         </div>
-        {isPending ? (
-          <LoadingSpinner />
-        ) : data.data.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-            <p className="mb-4 text-xl">You have no todos yet.</p>
-            <p className="text-sm">
-              Click the <span className="font-bold">+</span> button to add your first task.
-            </p>
-          </div>
-        ) : (
-          <div className="flex-1 flex-col space-y-4 overflow-auto py-8">
-            {data.data.map(todo => (
-              <div key={todo.id}>
-                <TodoCard
-                  id={todo.id}
-                  title={todo.title}
-                  memo={todo.memo}
-                  isCompleted={todo.isCompleted}
-                />
-              </div>
-            ))}
-          </div>
-        )}
-        <FloatingActionButton onClick={() => setToggleModal(true)} />
-      </div>
+      ) : (
+        <div className="space-y-4 py-8">
+          {data.data.map(todo => (
+            <div key={todo.id}>
+              <TodoCard
+                id={todo.id}
+                title={todo.title}
+                memo={todo.memo}
+                isCompleted={todo.isCompleted}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+      <FloatingActionButton onClick={() => setToggleModal(true)} />
       {toggleModal && (
         <Modal onClose={() => setToggleModal(false)}>
           <CreateTodoForm onClose={() => setToggleModal(false)} />
         </Modal>
       )}
-    </div>
+    </>
   )
 }

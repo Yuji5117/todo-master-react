@@ -42,7 +42,7 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
   }
 
   return (
-    <div className="m-auto flex w-3/4 justify-between rounded-md bg-white px-4 py-3 shadow-md">
+    <div className="m-auto flex mx-8 justify-between rounded-md bg-white px-4 py-3 shadow-md">
       <div className="flex space-x-4">
         <div className="flex items-center">
           <CheckBox
