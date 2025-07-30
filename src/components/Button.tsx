@@ -1,13 +1,24 @@
 import { clsx } from 'clsx'
 
+type ButtonVariant = 'primary' | 'secondary' | 'danger'
+type ButtonSize = 'sm' | 'md' | 'lg'
+type ButtonType = 'button' | 'submit'
+
 export type ButtonProps = {
   text: string
-  onClick: () => void
-  variant: 'primary' | 'secondary' | 'danger'
-  size?: 'sm' | 'md' | 'lg'
+  onClick?: () => void
+  variant?: ButtonVariant
+  size?: ButtonSize
+  type?: ButtonType
 }
 
-export const Button: React.FC<ButtonProps> = ({ text, onClick, variant, size = 'md' }) => {
+export const Button: React.FC<ButtonProps> = ({
+  text,
+  onClick,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+}) => {
   const baseClass = 'rounded-full font-medium transition cursor-pointer'
 
   const variantClass = {
@@ -24,7 +35,7 @@ export const Button: React.FC<ButtonProps> = ({ text, onClick, variant, size = '
 
   return (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
       className={clsx(baseClass, variantClass[variant], sizeClass[size])}
     >
