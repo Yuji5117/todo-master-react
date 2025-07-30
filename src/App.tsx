@@ -1,15 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
 
 import { getTodos } from './api/todos'
-import { CreateTodoForm } from './components/CreateTodoForm'
-import { FloatingActionButton } from './components/FloatingActionButton'
 import { LoadingSpinner } from './components/LoadingSpinner'
-import { Modal } from './components/Modal'
 import { TodoCard } from './components/TodoCard'
 
 export const App: React.FC = () => {
-  const [toggleModal, setToggleModal] = useState<boolean>(false)
   const { isPending, data, isError, error } = useQuery({ queryKey: ['todos'], queryFn: getTodos })
 
   if (isError) {
@@ -28,7 +23,7 @@ export const App: React.FC = () => {
           </p>
         </div>
       ) : (
-        <div className="space-y-4 py-8">
+        <div className="w-full space-y-4 py-8">
           {data.data.map(todo => (
             <div key={todo.id}>
               <TodoCard
@@ -40,12 +35,6 @@ export const App: React.FC = () => {
             </div>
           ))}
         </div>
-      )}
-      <FloatingActionButton onClick={() => setToggleModal(true)} />
-      {toggleModal && (
-        <Modal onClose={() => setToggleModal(false)}>
-          <CreateTodoForm onClose={() => setToggleModal(false)} />
-        </Modal>
       )}
     </>
   )
