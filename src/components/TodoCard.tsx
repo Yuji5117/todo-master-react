@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Button } from './Button'
 import { CheckBox } from './CheckBox'
 import { Modal } from './Modal'
+import { UpdateTodoForm } from './UpdateTodoForm'
 import { updateTodoCompletion } from '../api/todos'
 
 export type TodoCardType = {
@@ -45,7 +46,7 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
       </div>
       {toggleModal && (
         <Modal onClose={() => setToggleModal(false)}>
-          <div>test</div>
+          <UpdateTodoForm id={id} title={title} memo={memo} onClose={() => setToggleModal(false)} />
         </Modal>
       )}
     </div>
