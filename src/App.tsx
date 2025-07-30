@@ -4,16 +4,13 @@ import { useState } from 'react'
 import { getTodos } from './api/todos'
 import { CreateTodoForm } from './components/CreateTodoForm'
 import { FloatingActionButton } from './components/FloatingActionButton'
+import { LoadingSpinner } from './components/LoadingSpinner'
 import { Modal } from './components/Modal'
 import { TodoCard } from './components/TodoCard'
 
 export const App: React.FC = () => {
   const [toggleModal, setToggleModal] = useState<boolean>(false)
   const { isPending, data, isError, error } = useQuery({ queryKey: ['todos'], queryFn: getTodos })
-
-  if (isPending) {
-    return <span>Loading...</span>
-  }
 
   if (isError) {
     return <span>Error: {error.message}</span>
@@ -25,7 +22,9 @@ export const App: React.FC = () => {
         <div className="bg-primary flex h-12 items-center justify-center">
           <h1 className="text-xl font-semibold text-white">Todo Master</h1>
         </div>
-        {data.data.length === 0 ? (
+        {isPending ? (
+          <LoadingSpinner />
+        ) : data.data.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-gray-500">
             <p className="mb-4 text-xl">You have no todos yet.</p>
             <p className="text-sm">
