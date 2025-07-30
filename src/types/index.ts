@@ -21,6 +21,8 @@ export type Todo = Entity<{
 
 export type CreateNewTodoPayload = Pick<Todo, 'title' | 'memo'>
 
+export type UpdateTodoPayload = Pick<Todo, 'id' | 'title' | 'memo'>
+
 export type UpdateTodoCompletionPayload = Pick<Todo, 'id' | 'isCompleted'>
 
 export type ApiResponse<T> = {
