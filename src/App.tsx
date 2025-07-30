@@ -8,7 +8,12 @@ export const App: React.FC = () => {
   const { isPending, data, isError, error } = useQuery({ queryKey: ['todos'], queryFn: getTodos })
 
   if (isError) {
-    return <span>Error: {error.message}</span>
+    return (
+      <div className="text-error flex flex-col items-center justify-center py-12">
+        <h2 className="mb-2 text-xl font-semibold">Something went wrong</h2>
+        <p className="text-sm text-gray-600">Error message: {error.message}</p>
+      </div>
+    )
   }
 
   return (
