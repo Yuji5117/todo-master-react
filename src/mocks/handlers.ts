@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid'
 
 import { paths } from '../config/paths'
 
-import type { ApiResponse, CreateNewTodoPayload, Todo } from '../types'
+import type { ApiResponse, BaseUpdateTodoPayload, CreateNewTodoPayload, Todo } from '../types'
 
 const todos: Todo[] = [
   {
@@ -75,7 +75,7 @@ export const handlers = [
 
   http.patch(`${paths.app.todos.path}:id`, async ({ request, params }) => {
     const { id } = params
-    const { isCompleted } = (await request.json()) as { isCompleted: boolean }
+    const updates = (await request.json()) as BaseUpdateTodoPayload
     const index = todos.findIndex(todo => id === todo.id)
     if (index === -1)
       return HttpResponse.json({
@@ -85,7 +85,7 @@ export const handlers = [
         statusCode: 404,
       })
 
-    todos[index].isCompleted = isCompleted
+    todos[index] = { ...todos[index], ...updates }
 
     return HttpResponse.json({
       data: todos[index],

@@ -30,8 +30,8 @@ export const UpdateTodoForm: React.FC<UpdateTodoFormProps> = ({ id, title, memo,
     e.preventDefault()
     const updatedTodo: UpdateTodoPayload = {
       id: id,
-      title: title,
-      memo: memo,
+      title: editedTitle,
+      memo: editedMemo,
     }
 
     mutation.mutate(updatedTodo)
