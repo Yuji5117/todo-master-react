@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
 import { Button } from './Button'
-import { createNewTodo } from '../api/todo'
+import { createNewTodo } from '../api/todos'
 
 import type { CreateNewTodoPayload } from '../types'
 

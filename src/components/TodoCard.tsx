@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { Button } from './Button'
 import { CheckBox } from './CheckBox'
-import { updateTodoCompletion } from '../api/todo'
+import { updateTodoCompletion } from '../api/todos'
 
 export type TodoCardType = {
   id: string

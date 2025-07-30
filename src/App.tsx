@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
-import { getTodos } from './api/todo'
+import { getTodos } from './api/todos'
 import { CreateTodoForm } from './components/CreateTodoForm'
 import { FloatingActionButton } from './components/FloatingActionButton'
 import { Modal } from './components/Modal'
