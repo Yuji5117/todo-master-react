@@ -25,18 +25,27 @@ export const App: React.FC = () => {
         <div className="bg-primary flex h-12 items-center justify-center">
           <h1 className="text-xl font-semibold text-white">Todo Master</h1>
         </div>
-        <div className="flex-1 flex-col space-y-4 overflow-auto py-8">
-          {data.data.map(todo => (
-            <div key={todo.id}>
-              <TodoCard
-                id={todo.id}
-                title={todo.title}
-                memo={todo.memo}
-                isCompleted={todo.isCompleted}
-              />
-            </div>
-          ))}
-        </div>
+        {data.data.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-gray-500">
+            <p className="mb-4 text-xl">You have no todos yet.</p>
+            <p className="text-sm">
+              Click the <span className="font-bold">+</span> button to add your first task.
+            </p>
+          </div>
+        ) : (
+          <div className="flex-1 flex-col space-y-4 overflow-auto py-8">
+            {data.data.map(todo => (
+              <div key={todo.id}>
+                <TodoCard
+                  id={todo.id}
+                  title={todo.title}
+                  memo={todo.memo}
+                  isCompleted={todo.isCompleted}
+                />
+              </div>
+            ))}
+          </div>
+        )}
         <FloatingActionButton onClick={() => setToggleModal(true)} />
       </div>
       {toggleModal && (
