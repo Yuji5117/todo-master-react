@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
 import { getTodos } from './api/todo'
+import { CreateTodoForm } from './components/CreateTodoForm'
 import { FloatingActionButton } from './components/FloatingActionButton'
 import { Modal } from './components/Modal'
 import { TodoCard } from './components/TodoCard'
@@ -38,7 +39,11 @@ export const App: React.FC = () => {
         </div>
         <FloatingActionButton onClick={() => setToggleModal(true)} />
       </div>
-      {toggleModal && <Modal toggle={setToggleModal} />}
+      {toggleModal && (
+        <Modal onClose={() => setToggleModal(false)}>
+          <CreateTodoForm onClose={() => setToggleModal(false)} />
+        </Modal>
+      )}
     </div>
   )
 }
