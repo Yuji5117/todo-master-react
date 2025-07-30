@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
+import { FaTrashAlt } from 'react-icons/fa'
 
 import { Button } from './Button'
 import { CheckBox } from './CheckBox'
@@ -27,6 +28,10 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
   const handleCheck = (id: string, checked: boolean) =>
     mutation.mutate({ id, isCompleted: checked })
 
+  const handleDeleteTodo = (id: string) => {
+    console.log(id)
+  }
+
   return (
     <div className="m-auto flex w-3/4 justify-between rounded-md bg-white px-4 py-3 shadow-md">
       <div className="flex space-x-4">
@@ -41,8 +46,12 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
           {memo && <p className="text-sm font-light text-[#111827]">{memo}</p>}
         </div>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center space-x-2">
         <Button text="Edit" onClick={() => setToggleModal(true)} variant="primary" size="sm" />
+        <FaTrashAlt
+          onClick={() => handleDeleteTodo(id)}
+          className="text-error cursor-pointer text-sm transition-colors duration-200 hover:text-red-300"
+        />
       </div>
       {toggleModal && (
         <Modal onClose={() => setToggleModal(false)}>
