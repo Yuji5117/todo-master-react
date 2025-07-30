@@ -29,16 +29,19 @@ export const App: React.FC = () => {
         </div>
       ) : (
         <div className="w-full space-y-4 py-8">
-          {data.data.map(todo => (
-            <div key={todo.id}>
-              <TodoCard
-                id={todo.id}
-                title={todo.title}
-                memo={todo.memo}
-                isCompleted={todo.isCompleted}
-              />
-            </div>
-          ))}
+          {data.data
+            .slice()
+            .sort((a, b) => Number(a.isCompleted) - Number(b.isCompleted))
+            .map(todo => (
+              <div key={todo.id}>
+                <TodoCard
+                  id={todo.id}
+                  title={todo.title}
+                  memo={todo.memo}
+                  isCompleted={todo.isCompleted}
+                />
+              </div>
+            ))}
         </div>
       )}
     </>
