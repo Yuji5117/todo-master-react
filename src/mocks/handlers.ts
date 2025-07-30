@@ -5,7 +5,7 @@ import { paths } from '../config/paths'
 
 import type { ApiResponse, BaseUpdateTodoPayload, CreateNewTodoPayload, Todo } from '../types'
 
-const todos: Todo[] = [
+let todos: Todo[] = [
   {
     id: '1',
     title: 'Buy groceries',
@@ -90,6 +90,27 @@ export const handlers = [
     return HttpResponse.json({
       data: todos[index],
       message: 'Todo updated successfully',
+      statusCode: 200,
+    })
+  }),
+
+  http.delete(`${paths.app.todos.path}:id`, async ({ params }) => {
+    const { id } = params
+
+    const index = todos.findIndex(todo => id === todo.id)
+    if (index === -1)
+      return HttpResponse.json({
+        message: 'Todo not found',
+        error: 'Invalid ID',
+        data: null,
+        statusCode: 404,
+      })
+
+    todos = todos.filter(todo => id !== todo.id)
+
+    return HttpResponse.json({
+      message: 'Todo deleted successfully',
+      data: { id },
       statusCode: 200,
     })
   }),
