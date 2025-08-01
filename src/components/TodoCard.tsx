@@ -6,8 +6,9 @@ import { Button } from './Button'
 import { CheckBox } from './CheckBox'
 import { Modal } from './Modal'
 import { UpdateTodoForm } from './UpdateTodoForm'
-import { deleteTodo, updateTodoCompletion } from '../api/todos'
+import { updateTodoCompletion } from '../api/todos'
 import { useModal } from '../hooks/use-modal'
+import { useDeleteTodo } from '../hooks/use-todos'
 
 export type TodoCardType = {
   id: string
@@ -19,14 +20,9 @@ export type TodoCardType = {
 export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompleted }) => {
   const { isOpen, openModal, closeModal } = useModal()
   const queryClient = useQueryClient()
+  const deleteTodo = useDeleteTodo()
   const updateTodoMutation = useMutation({
     mutationFn: updateTodoCompletion,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] })
-    },
-  })
-  const deleteTodoMutation = useMutation({
-    mutationFn: deleteTodo,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
     },
@@ -39,7 +35,7 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
     const ok = confirm('Are you sure to delete this todo?')
     if (!ok) return
 
-    deleteTodoMutation.mutate(id)
+    deleteTodo.mutate(id)
   }
 
   return (

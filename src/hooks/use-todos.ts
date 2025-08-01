@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query'
 
-import { createNewTodo, updateTodo } from '../api/todos'
+import { createNewTodo, deleteTodo, updateTodo } from '../api/todos'
 
 import type { ApiResponse, CreateNewTodoPayload, Todo, UpdateTodoPayload } from '../types'
 
@@ -38,6 +38,19 @@ export const useUpdateTodo = (onClose: () => void): UseUpdateTodoReturnType => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
       onClose()
+    },
+  })
+}
+
+type UseDeleteTodoReturnType = UseMutationResult<ApiResponse<string>, Error, string, unknown>
+
+export const useDeleteTodo = (): UseDeleteTodoReturnType => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: deleteTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['todos'] })
     },
   })
 }
