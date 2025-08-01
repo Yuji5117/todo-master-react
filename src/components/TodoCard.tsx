@@ -1,4 +1,3 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { clsx } from 'clsx'
 import { FaTrashAlt } from 'react-icons/fa'
 
@@ -6,9 +5,8 @@ import { Button } from './Button'
 import { CheckBox } from './CheckBox'
 import { Modal } from './Modal'
 import { UpdateTodoForm } from './UpdateTodoForm'
-import { updateTodoCompletion } from '../api/todos'
 import { useModal } from '../hooks/use-modal'
-import { useDeleteTodo } from '../hooks/use-todos'
+import { useDeleteTodo, useUpdateTodoCompletion } from '../hooks/use-todos'
 
 export type TodoCardType = {
   id: string
@@ -19,17 +17,11 @@ export type TodoCardType = {
 
 export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompleted }) => {
   const { isOpen, openModal, closeModal } = useModal()
-  const queryClient = useQueryClient()
+  const updateTodoCompletion = useUpdateTodoCompletion()
   const deleteTodo = useDeleteTodo()
-  const updateTodoMutation = useMutation({
-    mutationFn: updateTodoCompletion,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] })
-    },
-  })
 
   const handleCheck = (id: string, checked: boolean) =>
-    updateTodoMutation.mutate({ id, isCompleted: checked })
+    updateTodoCompletion.mutate({ id, isCompleted: checked })
 
   const handleDeleteTodo = async (id: string) => {
     const ok = confirm('Are you sure to delete this todo?')
