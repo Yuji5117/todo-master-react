@@ -1,29 +1,20 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
 import { Button } from './Button'
-import { createNewTodo } from '../api/todos'
 import { Form } from './ui/Form'
+import { UseCreateTodo } from '../hooks/useUpdateTodo'
 
 import type { CreateNewTodoPayload } from '../types'
 
 export type CreateTodoFormProps = {
-  onClose: (value: boolean) => void
+  onClose: () => void
 }
 
 export const CreateTodoForm: React.FC<CreateTodoFormProps> = ({ onClose }) => {
-  const queryClient = useQueryClient()
+  const createTodo = UseCreateTodo(onClose)
   const [title, setTitle] = useState<string>('')
   const [memo, setMemo] = useState<string>('')
   const [error, setError] = useState<string>('')
-
-  const mutation = useMutation({
-    mutationFn: createNewTodo,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] })
-      onClose(false)
-    },
-  })
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -38,7 +29,7 @@ export const CreateTodoForm: React.FC<CreateTodoFormProps> = ({ onClose }) => {
     }
 
     setError('')
-    mutation.mutate(newTodo)
+    createTodo.mutate(newTodo)
   }
   return (
     <Form title="Create New Todo" onSubmit={handleFormSubmit}>
