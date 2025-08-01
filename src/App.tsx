@@ -9,6 +9,10 @@ export const App: React.FC = () => {
   const { isPending, data, isError, error } = useQuery({ queryKey: ['todos'], queryFn: getTodos })
   const [showCompleted, setShowCompleted] = useState<boolean>(true)
 
+  if (isPending) {
+    return <LoadingSpinner />
+  }
+
   if (isError) {
     return (
       <div className="text-error flex flex-col items-center justify-center py-12">
@@ -20,9 +24,7 @@ export const App: React.FC = () => {
 
   return (
     <>
-      {isPending ? (
-        <LoadingSpinner />
-      ) : data.data.length === 0 ? (
+      {data.data.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-gray-500">
           <p className="mb-4 text-xl">You have no todos yet.</p>
           <p className="text-sm">
