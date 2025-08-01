@@ -45,7 +45,7 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
   return (
     <div
       className={clsx(
-        'm-auto mx-8 flex justify-between rounded-md px-4 py-3 shadow-md transition-colors duration-200',
+        'flex justify-between rounded-md px-4 py-3 shadow-md transition-colors duration-200',
         isCompleted ? 'border border-green-300 bg-green-50' : 'bg-white',
       )}
     >

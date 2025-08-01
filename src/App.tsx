@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 
 import { getTodos } from './api/todos'
 import { LoadingSpinner } from './components/LoadingSpinner'
-import { TodoCard } from './components/TodoCard'
+import { TodoList } from './components/TodoList'
 
 export const App: React.FC = () => {
   const { isPending, data, isError, error } = useQuery({ queryKey: ['todos'], queryFn: getTodos })
+  const [showCompleted, setShowCompleted] = useState<boolean>(true)
 
   if (isError) {
     return (
@@ -28,20 +30,19 @@ export const App: React.FC = () => {
           </p>
         </div>
       ) : (
-        <div className="w-full space-y-4 py-8">
-          {data.data
-            .slice()
-            .sort((a, b) => Number(a.isCompleted) - Number(b.isCompleted))
-            .map(todo => (
-              <div key={todo.id}>
-                <TodoCard
-                  id={todo.id}
-                  title={todo.title}
-                  memo={todo.memo}
-                  isCompleted={todo.isCompleted}
-                />
-              </div>
-            ))}
+        <div className="m-auto flex w-full flex-col space-y-4 px-8 py-8">
+          <label className="flex cursor-pointer justify-end bg-amber-200">
+            <input
+              type="checkbox"
+              checked={showCompleted}
+              onChange={() => setShowCompleted(prev => !prev)}
+              className="peer sr-only"
+            />
+            <div className="peer-checked:bg-success relative h-5 w-9 rounded-full bg-gray-300 transition-colors">
+              <div className="absolute top-[2px] left-[2px] h-4 w-4 rounded-full bg-white transition-all peer-checked:translate-x-4"></div>
+            </div>
+          </label>
+          <TodoList todos={data.data} />
         </div>
       )}
     </>
