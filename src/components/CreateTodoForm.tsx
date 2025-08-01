@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Button } from './Button'
 import { Form } from './ui/Form'
-import { UseCreateTodo } from '../hooks/useUpdateTodo'
+import { UseCreateTodo } from '../hooks/use-todos'
 
 import type { CreateNewTodoPayload } from '../types'
 

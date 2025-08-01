@@ -7,7 +7,7 @@ import { CheckBox } from './CheckBox'
 import { Modal } from './Modal'
 import { UpdateTodoForm } from './UpdateTodoForm'
 import { deleteTodo, updateTodoCompletion } from '../api/todos'
-import { useModal } from '../hooks/useModal'
+import { useModal } from '../hooks/use-modal'
 
 export type TodoCardType = {
   id: string

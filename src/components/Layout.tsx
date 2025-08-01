@@ -3,7 +3,7 @@ import { type ReactNode } from 'react'
 import { CreateTodoForm } from './CreateTodoForm'
 import { FloatingActionButton } from './FloatingActionButton'
 import { Modal } from './Modal'
-import { useModal } from '../hooks/useModal'
+import { useModal } from '../hooks/use-modal'
 
 type LayoutProps = {
   children: ReactNode

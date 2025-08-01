@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Button } from './Button'
 import { Form } from './ui/Form'
-import { useUpdateTodo } from '../hooks/useUpdateTodo'
+import { useUpdateTodo } from '../hooks/use-todos'
 
 import type { UpdateTodoPayload } from '../types'
 
