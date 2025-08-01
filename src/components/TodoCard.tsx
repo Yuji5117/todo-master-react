@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { clsx } from 'clsx'
-import { useState } from 'react'
 import { FaTrashAlt } from 'react-icons/fa'
 
 import { Button } from './Button'
@@ -8,6 +7,7 @@ import { CheckBox } from './CheckBox'
 import { Modal } from './Modal'
 import { UpdateTodoForm } from './UpdateTodoForm'
 import { deleteTodo, updateTodoCompletion } from '../api/todos'
+import { useModal } from '../hooks/useModal'
 
 export type TodoCardType = {
   id: string
@@ -17,7 +17,7 @@ export type TodoCardType = {
 }
 
 export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompleted }) => {
-  const [toggleModal, setToggleModal] = useState<boolean>(false)
+  const { isOpen, openModal, closeModal } = useModal()
   const queryClient = useQueryClient()
   const updateTodoMutation = useMutation({
     mutationFn: updateTodoCompletion,
@@ -62,15 +62,15 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
         </div>
       </div>
       <div className="flex items-center space-x-2">
-        <Button text="Edit" onClick={() => setToggleModal(true)} variant="primary" size="sm" />
+        <Button text="Edit" onClick={openModal} variant="primary" size="sm" />
         <FaTrashAlt
           onClick={() => handleDeleteTodo(id)}
           className="text-error cursor-pointer text-sm transition-colors duration-200 hover:text-red-300"
         />
       </div>
-      {toggleModal && (
-        <Modal onClose={() => setToggleModal(false)}>
-          <UpdateTodoForm id={id} title={title} memo={memo} onClose={() => setToggleModal(false)} />
+      {isOpen && (
+        <Modal onClose={closeModal}>
+          <UpdateTodoForm id={id} title={title} memo={memo} onClose={closeModal} />
         </Modal>
       )}
     </div>
