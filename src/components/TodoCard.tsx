@@ -3,7 +3,7 @@ import { FaTrashAlt } from 'react-icons/fa'
 
 import { Button } from './Button'
 import { CheckBox } from './CheckBox'
-import { Modal } from './Modal'
+import { Modal } from './ui/Modal'
 import { UpdateTodoForm } from './UpdateTodoForm'
 import { useModal } from '../hooks/use-modal'
 import { useDeleteTodo, useUpdateTodoCompletion } from '../hooks/use-todos'
