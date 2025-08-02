@@ -20,7 +20,7 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
   const updateTodoCompletion = useUpdateTodoCompletion()
   const deleteTodo = useDeleteTodo()
 
-  const handleDeleteTodo = async (id: string) => {
+  const handleDeleteTodo = (id: string) => {
     const ok = confirm('Are you sure to delete this todo?')
     if (!ok) return
 
