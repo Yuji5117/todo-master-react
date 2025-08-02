@@ -20,9 +20,6 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
   const updateTodoCompletion = useUpdateTodoCompletion()
   const deleteTodo = useDeleteTodo()
 
-  const handleCheck = (id: string, checked: boolean) =>
-    updateTodoCompletion.mutate({ id, isCompleted: checked })
-
   const handleDeleteTodo = async (id: string) => {
     const ok = confirm('Are you sure to delete this todo?')
     if (!ok) return
@@ -41,7 +38,9 @@ export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompl
         <div className="flex items-center">
           <CheckBox
             checked={isCompleted}
-            onChange={(checked: boolean) => handleCheck(id, checked)}
+            onChange={(checked: boolean) =>
+              updateTodoCompletion.mutate({ id, isCompleted: checked })
+            }
           />
         </div>
         <div className="flex flex-col">
