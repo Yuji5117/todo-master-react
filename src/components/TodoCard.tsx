@@ -1,8 +1,8 @@
 import { clsx } from 'clsx'
 import { FaTrashAlt } from 'react-icons/fa'
 
-import { CheckBox } from './CheckBox'
 import { Button } from './ui/Button'
+import { CheckBox } from './ui/CheckBox'
 import { Modal } from './ui/Modal'
 import { UpdateTodoForm } from './UpdateTodoForm'
 import { useModal } from '../hooks/use-modal'
