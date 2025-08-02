@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
 import { getTodos } from './api/todos'
-import { LoadingSpinner } from './components/LoadingSpinner'
 import { TodoList } from './components/TodoList'
+import { LoadingSpinner } from './components/ui/LoadingSpinner'
 
 export const App: React.FC = () => {
   const { isPending, data, isError, error } = useQuery({ queryKey: ['todos'], queryFn: getTodos })
