@@ -35,16 +35,15 @@ export const App: React.FC = () => {
 
   return (
     <div className="m-auto flex w-full flex-col space-y-4 px-8 py-8">
-      <label className="flex cursor-pointer justify-end bg-amber-200">
+      <label className="relative inline-flex cursor-pointer items-center self-end">
         <input
           type="checkbox"
           checked={showCompleted}
           onChange={() => setShowCompleted(prev => !prev)}
           className="peer sr-only"
         />
-        <div className="peer-checked:bg-success relative h-5 w-9 rounded-full bg-gray-300 transition-colors">
-          <div className="absolute top-[2px] left-[2px] h-4 w-4 rounded-full bg-white transition-all peer-checked:translate-x-4"></div>
-        </div>
+        <div className="peer-checked:bg-success h-6 w-11 rounded-full bg-gray-300 transition-colors duration-200" />
+        <div className="absolute top-0.5 left-0.5 h-5 w-5 translate-x-0 transform rounded-full bg-white shadow duration-200 peer-checked:translate-x-5" />
       </label>
       <TodoList todos={data.data} showCompleted={showCompleted} />
     </div>
