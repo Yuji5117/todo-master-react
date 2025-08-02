@@ -46,7 +46,7 @@ export const App: React.FC = () => {
           <div className="absolute top-[2px] left-[2px] h-4 w-4 rounded-full bg-white transition-all peer-checked:translate-x-4"></div>
         </div>
       </label>
-      <TodoList todos={data.data} />
+      <TodoList todos={data.data} showCompleted={showCompleted} />
     </div>
   )
 }

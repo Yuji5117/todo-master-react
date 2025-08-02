@@ -8,17 +8,18 @@ import { UpdateTodoForm } from './UpdateTodoForm'
 import { useModal } from '../hooks/use-modal'
 import { useDeleteTodo, useUpdateTodoCompletion } from '../hooks/use-todos'
 
+import type { Todo } from '../types'
+
 export type TodoCardType = {
-  id: string
-  title: string
-  memo?: string
-  isCompleted: boolean
+  todo: Todo
 }
 
-export const TodoCard: React.FC<TodoCardType> = ({ id, title, memo = '', isCompleted }) => {
+export const TodoCard: React.FC<TodoCardType> = ({ todo }) => {
   const { isOpen, openModal, closeModal } = useModal()
   const updateTodoCompletion = useUpdateTodoCompletion()
   const deleteTodo = useDeleteTodo()
+
+  const { id, title, memo, isCompleted } = todo
 
   const handleDeleteTodo = (id: string) => {
     const ok = confirm('Are you sure to delete this todo?')
