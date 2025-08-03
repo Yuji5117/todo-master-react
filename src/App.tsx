@@ -4,14 +4,16 @@ import { useState } from 'react'
 import { getTodos } from './api/todos'
 import { TodoSection } from './components/TodoSection'
 import { SearchBar } from './components/ui/SearchBar'
+import { useDebounce } from './hooks/use-debounce'
 
 import type { Todo } from './types'
 
 export const App: React.FC = () => {
   const [query, setQuery] = useState<string>('')
+  const debouncedQuery = useDebounce<string>(query)
   const { isPending, data, isError, error } = useQuery({
-    queryKey: ['todos', query],
-    queryFn: () => getTodos(query),
+    queryKey: ['todos', debouncedQuery],
+    queryFn: () => getTodos(debouncedQuery),
   })
   const [showCompleted, setShowCompleted] = useState<boolean>(true)
 
