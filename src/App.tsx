@@ -45,9 +45,9 @@ export const App: React.FC = () => {
 
   return (
     <div className="m-auto flex w-full flex-col space-y-4 px-8 py-8">
-      <div className="flex w-full justify-between">
+      <div className="flex w-full items-center justify-between gap-5">
         <SearchBar value={query} onChange={setQuery} />
-        <label className="relative inline-flex cursor-pointer items-center self-end">
+        <label className="relative inline-flex cursor-pointer items-center">
           <input
             type="checkbox"
             checked={showCompleted}
