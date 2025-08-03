@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import { Button } from './ui/Button'
 import { Form } from './ui/Form'
+import { ToastContext } from '../contexts/ToastContext'
 import { UseCreateTodo } from '../hooks/use-todos'
 
 import type { CreateNewTodoPayload } from '../types'
@@ -12,6 +13,7 @@ export type CreateTodoFormProps = {
 
 export const CreateTodoForm: React.FC<CreateTodoFormProps> = ({ onClose }) => {
   const createTodo = UseCreateTodo(onClose)
+  const addToast = useContext(ToastContext)
   const [title, setTitle] = useState<string>('')
   const [memo, setMemo] = useState<string>('')
   const [error, setError] = useState<string>('')
@@ -30,6 +32,7 @@ export const CreateTodoForm: React.FC<CreateTodoFormProps> = ({ onClose }) => {
 
     setError('')
     createTodo.mutate(newTodo)
+    addToast?.addToast('新しいTodoを追加しました。', 'success')
   }
   return (
     <Form title="Create New Todo" onSubmit={handleFormSubmit}>

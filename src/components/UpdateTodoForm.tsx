@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import { Button } from './ui/Button'
 import { Form } from './ui/Form'
+import { ToastContext } from '../contexts/ToastContext'
 import { useUpdateTodo } from '../hooks/use-todos'
 
 import type { UpdateTodoPayload } from '../types'
@@ -15,6 +16,7 @@ export type UpdateTodoFormProps = {
 
 export const UpdateTodoForm: React.FC<UpdateTodoFormProps> = ({ id, title, memo, onClose }) => {
   const updateTodo = useUpdateTodo(onClose)
+  const addToast = useContext(ToastContext)
   const [editedTitle, setEditedTitle] = useState<string>(title)
   const [editedMemo, setEditedMemo] = useState<string>(memo ?? '')
   const [error, setError] = useState<string>('')
@@ -33,6 +35,7 @@ export const UpdateTodoForm: React.FC<UpdateTodoFormProps> = ({ id, title, memo,
     }
 
     updateTodo.mutate(updatedTodo)
+    addToast?.addToast('Todoを更新しました。', 'success')
   }
   return (
     <Form title="Update Todo" onSubmit={handleFormSubmit}>
