@@ -13,7 +13,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   return (
     <ToastContext.Provider value={{ addToast }}>
       {children}
-      {toast && <Toast message={toast.message} onClose={() => setToast(null)} />}
+      {toast && <Toast message={toast.message} onClose={() => setToast(null)} type={toast.type} />}
     </ToastContext.Provider>
   )
 }

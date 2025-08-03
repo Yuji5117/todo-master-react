@@ -29,7 +29,7 @@ export const TodoCard: React.FC<TodoCardType> = ({ todo }) => {
     if (!ok) return
 
     deleteTodo.mutate(id)
-    addToast?.addToast('削除されました', 'success')
+    addToast?.addToast('削除されました', 'error')
   }
 
   return (
