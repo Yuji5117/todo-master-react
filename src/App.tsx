@@ -4,10 +4,20 @@ import { useState } from 'react'
 import { getTodos } from './api/todos'
 import { TodoList } from './components/TodoList'
 import { LoadingSpinner } from './components/ui/LoadingSpinner'
+import { SearchBar } from './components/ui/SearchBar'
+
+import type { Todo } from './types'
 
 export const App: React.FC = () => {
   const { isPending, data, isError, error } = useQuery({ queryKey: ['todos'], queryFn: getTodos })
   const [showCompleted, setShowCompleted] = useState<boolean>(true)
+  const [query, setQuery] = useState<string>('')
+
+  const todos: Todo[] = data?.data ?? []
+
+  const visibleTodos: Todo[] = showCompleted
+    ? [...todos].sort((a, b) => Number(a.isCompleted) - Number(b.isCompleted))
+    : [...todos].filter(todo => !todo.isCompleted)
 
   if (isPending) {
     return <LoadingSpinner />
@@ -35,17 +45,20 @@ export const App: React.FC = () => {
 
   return (
     <div className="m-auto flex w-full flex-col space-y-4 px-8 py-8">
-      <label className="relative inline-flex cursor-pointer items-center self-end">
-        <input
-          type="checkbox"
-          checked={showCompleted}
-          onChange={() => setShowCompleted(prev => !prev)}
-          className="peer sr-only"
-        />
-        <div className="peer-checked:bg-success h-6 w-11 rounded-full bg-gray-300 transition-colors duration-200" />
-        <div className="absolute top-0.5 left-0.5 h-5 w-5 translate-x-0 transform rounded-full bg-white shadow duration-200 peer-checked:translate-x-5" />
-      </label>
-      <TodoList todos={data.data} showCompleted={showCompleted} />
+      <div className="flex w-full justify-between">
+        <SearchBar value={query} onChange={setQuery} />
+        <label className="relative inline-flex cursor-pointer items-center self-end">
+          <input
+            type="checkbox"
+            checked={showCompleted}
+            onChange={() => setShowCompleted(prev => !prev)}
+            className="peer sr-only"
+          />
+          <div className="peer-checked:bg-success h-6 w-11 rounded-full bg-gray-300 transition-colors duration-200" />
+          <div className="absolute top-0.5 left-0.5 h-5 w-5 translate-x-0 transform rounded-full bg-white shadow duration-200 peer-checked:translate-x-5" />
+        </label>
+      </div>
+      <TodoList todos={visibleTodos} />
     </div>
   )
 }
