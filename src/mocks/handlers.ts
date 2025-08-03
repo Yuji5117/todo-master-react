@@ -114,10 +114,17 @@ let todos: Todo[] = [
 ]
 
 export const handlers = [
-  http.get(paths.app.todos.path, async () => {
+  http.get(paths.app.todos.path, async ({ request }) => {
     await delay()
+    const url = new URL(request.url)
+    const searchQuery = url.searchParams.get('query')
+
+    const filteredTodos = searchQuery
+      ? todos.filter(todo => todo.title.toLowerCase().includes(searchQuery.toLowerCase()))
+      : todos
+
     const response: ApiResponse<Todo[]> = {
-      data: todos,
+      data: filteredTodos,
       message: 'Fetched successfully',
       statusCode: 200,
     }

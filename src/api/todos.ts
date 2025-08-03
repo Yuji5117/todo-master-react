@@ -8,9 +8,9 @@ import type {
   UpdateTodoPayload,
 } from '../types'
 
-export const getTodos = async (): Promise<ApiResponse<Todo[]>> => {
+export const getTodos = async (query: string): Promise<ApiResponse<Todo[]>> => {
   try {
-    const response = await fetch(paths.app.todos.path, {
+    const response = await fetch(`${paths.app.todos.path}?query=${encodeURIComponent(query)}`, {
       method: 'GET',
     })
 
