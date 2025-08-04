@@ -1,3 +1,5 @@
+import type { ErrorCode } from '../config/errorCodes'
+
 export type BaseEntity = {
   id: string
   createdAt: string
@@ -27,7 +29,7 @@ export type UpdateTodoCompletionPayload = Pick<Todo, 'id' | 'isCompleted'>
 
 export type ErrorResponse = {
   message: string
-  errorCode: string
+  errorCode: ErrorCode
 }
 
 export type SuccessResponse<T> = {
