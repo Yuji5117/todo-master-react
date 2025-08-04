@@ -21,7 +21,12 @@ export const Toast: React.FC<ToastProps> = ({ message, duration = 3000, onClose,
 
   return (
     <div className="flex justify-center">
-      <div className={clsx(variant[type], 'fixed bottom-20 rounded px-4 py-2 text-white shadow')}>
+      <div
+        className={clsx(
+          variant[type],
+          'animate-fade-in-up fixed bottom-20 rounded px-4 py-2 text-white shadow',
+        )}
+      >
         {message}
       </div>
     </div>
