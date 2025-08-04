@@ -25,9 +25,14 @@ export type BaseUpdateTodoPayload = Partial<Pick<Todo, 'title' | 'memo' | 'isCom
 export type UpdateTodoPayload = Pick<Todo, 'id' | 'title' | 'memo'>
 export type UpdateTodoCompletionPayload = Pick<Todo, 'id' | 'isCompleted'>
 
-export type ApiResponse<T> = {
+export type ErrorResponse = {
+  message: string
+  errorCode: string
+}
+
+export type SuccessResponse<T> = {
   data: T
   message: string
-  error?: string | null
-  statusCode: number
 }
+
+export type ApiResponse<T> = SuccessResponse<T> | ErrorResponse
