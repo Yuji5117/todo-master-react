@@ -28,11 +28,13 @@ export type UpdateTodoPayload = Pick<Todo, 'id' | 'title' | 'memo'>
 export type UpdateTodoCompletionPayload = Pick<Todo, 'id' | 'isCompleted'>
 
 export type ErrorResponse = {
+  success: false
   message: string
   errorCode: ErrorCode
 }
 
 export type SuccessResponse<T> = {
+  success: true
   data: T
   message: string
 }
