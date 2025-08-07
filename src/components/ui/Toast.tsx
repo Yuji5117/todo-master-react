@@ -24,7 +24,7 @@ export const Toast: React.FC<ToastProps> = ({ message, duration = 3000, onClose,
       <div
         className={clsx(
           variant[type],
-          'animate-fade-in-up fixed bottom-20 rounded px-4 py-2 text-white shadow',
+          'animate-fade-in-up fixed bottom-20 rounded px-4 py-2 text-white shadow z-50',
         )}
       >
         {message}
