@@ -22,7 +22,7 @@ export const TodoCard: React.FC<TodoCardType> = ({ todo }) => {
   const { id, title, memo, isCompleted } = todo
 
   const handleDeleteTodo = (id: string) => {
-    const ok = confirm('Are you sure to delete this todo?')
+    const ok = confirm('本当に削除しますか？ この操作は元に戻せません。')
     if (!ok) return
 
     deleteTodo.mutate(id)
