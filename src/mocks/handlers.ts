@@ -126,7 +126,6 @@ export const handlers = [
     const response: ApiResponse<Todo[]> = {
       data: filteredTodos,
       message: 'Fetched successfully',
-      statusCode: 200,
     }
     return HttpResponse.json(response)
   }),
