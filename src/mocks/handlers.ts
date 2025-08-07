@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid'
 import { paths } from '../config/paths'
 
 import type { ApiResponse, BaseUpdateTodoPayload, CreateNewTodoPayload, Todo } from '../types'
+import { ErrorCode } from '../config/errorCodes'
 
 let todos: Todo[] = [
   {
@@ -124,6 +125,7 @@ export const handlers = [
       : todos
 
     const response: ApiResponse<Todo[]> = {
+      success: true,
       data: filteredTodos,
       message: 'Fetched successfully',
     }
@@ -147,12 +149,14 @@ export const handlers = [
     const updates = (await request.json()) as BaseUpdateTodoPayload
     const index = todos.findIndex(todo => id === todo.id)
     if (index === -1)
-      return HttpResponse.json({
-        message: 'Todo not found',
-        error: 'Invalid ID',
-        data: null,
-        statusCode: 404,
-      })
+      return HttpResponse.json<ApiResponse<null>>(
+        {
+          success: false,
+          message: '該当するTodoが存在しません。',
+          errorCode: ErrorCode.TODO_NOT_FOUND,
+        },
+        { status: 404 },
+      )
 
     todos[index] = { ...todos[index], ...updates }
 
