@@ -26,7 +26,7 @@ export const UseCreateTodo = (onClose: () => void): UseCreateTodoReturnType => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
       onClose()
-      toast.success('Todo created successfully')
+      toast.success('新しいTodoを作成しました。')
     },
   })
 }
@@ -46,6 +46,7 @@ export const useUpdateTodo = (onClose: () => void): UseUpdateTodoReturnType => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
       onClose()
+      toast.success('Todoを更新しました。')
     },
   })
 }
