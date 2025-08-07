@@ -1,5 +1,4 @@
 import { clsx } from 'clsx'
-import { useContext } from 'react'
 import { FaTrashAlt } from 'react-icons/fa'
 
 import { Button } from './ui/Button'
