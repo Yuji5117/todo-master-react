@@ -6,7 +6,6 @@ import { Button } from './ui/Button'
 import { CheckBox } from './ui/CheckBox'
 import { Modal } from './ui/Modal'
 import { UpdateTodoForm } from './UpdateTodoForm'
-import { ToastContext } from '../contexts/ToastContext'
 import { useModal } from '../hooks/use-modal'
 import { useDeleteTodo, useUpdateTodoCompletion } from '../hooks/use-todos'
 
@@ -20,7 +19,6 @@ export const TodoCard: React.FC<TodoCardType> = ({ todo }) => {
   const { isOpen, openModal, closeModal } = useModal()
   const updateTodoCompletion = useUpdateTodoCompletion()
   const deleteTodo = useDeleteTodo()
-  const addToast = useContext(ToastContext)
 
   const { id, title, memo, isCompleted } = todo
 
@@ -29,7 +27,6 @@ export const TodoCard: React.FC<TodoCardType> = ({ todo }) => {
     if (!ok) return
 
     deleteTodo.mutate(id)
-    addToast?.addToast('削除されました', 'error')
   }
 
   return (

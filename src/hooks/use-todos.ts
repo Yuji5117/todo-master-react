@@ -78,6 +78,7 @@ export const useDeleteTodo = (): UseDeleteTodoReturnType => {
     mutationFn: deleteTodo,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
+      toast.success('Todoを削除しました。')
     },
   })
 }
