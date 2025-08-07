@@ -9,6 +9,7 @@ import type {
   UpdateTodoCompletionPayload,
   UpdateTodoPayload,
 } from '../types'
+import { toast } from '../lib/toast'
 
 type UseCreateTodoReturnType = UseMutationResult<
   ApiResponse<Todo>,
@@ -25,6 +26,7 @@ export const UseCreateTodo = (onClose: () => void): UseCreateTodoReturnType => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
       onClose()
+      toast.success('Todo created successfully')
     },
   })
 }
