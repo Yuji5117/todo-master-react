@@ -1,8 +1,7 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 import { Button } from './ui/Button'
 import { Form } from './ui/Form'
-import { ToastContext } from '../contexts/ToastContext'
 import { UseCreateTodo } from '../hooks/use-todos'
 
 import type { CreateNewTodoPayload } from '../types'
