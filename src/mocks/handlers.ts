@@ -170,21 +170,48 @@ export const handlers = [
   http.delete(`${paths.app.todos.path}:id`, async ({ params }) => {
     const { id } = params
 
+    if (!id) {
+      return HttpResponse.json(
+        {
+          success: false,
+          message: '削除対象のIDが指定されていません。',
+          errorCode: ErrorCode.ID_MISSING,
+        },
+        { status: 400 },
+      )
+    }
+
+    if (typeof id !== 'string') {
+      return HttpResponse.json(
+        {
+          success: false,
+          message: 'IDの形式が不正です。',
+          errorCode: ErrorCode.ID_MISSING,
+        },
+        { status: 400 },
+      )
+    }
+
     const index = todos.findIndex(todo => id === todo.id)
     if (index === -1)
-      return HttpResponse.json({
-        message: 'Todo not found',
-        error: 'Invalid ID',
-        data: null,
-        statusCode: 404,
-      })
+      return HttpResponse.json(
+        {
+          success: false,
+          message: '該当するTodoが存在しません。',
+          errorCode: ErrorCode.TODO_NOT_FOUND,
+        },
+        { status: 404 },
+      )
 
     todos = todos.filter(todo => id !== todo.id)
 
-    return HttpResponse.json({
-      message: 'Todo deleted successfully',
-      data: { id },
-      statusCode: 200,
-    })
+    return HttpResponse.json<ApiResponse<{ id: string }>>(
+      {
+        success: true,
+        message: 'Todo deleted successfully',
+        data: { id },
+      },
+      { status: 200 },
+    )
   }),
 ]

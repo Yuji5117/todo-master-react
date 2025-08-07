@@ -103,8 +103,16 @@ export const deleteTodo = async (id: string): Promise<ApiResponse<string>> => {
 
     const decodedData: ApiResponse<string> = await response.json()
 
+    if (!response.ok || !decodedData.success) {
+      throw new Error(decodedData.message)
+    }
+
     return decodedData
   } catch (error) {
+    if (error instanceof Error) {
+      console.error('updateTodo error:', error)
+      throw error
+    }
     console.log('deleteTodo error:', error)
     throw new Error('Failed to delete todo')
   }

@@ -83,5 +83,8 @@ export const useDeleteTodo = (): UseDeleteTodoReturnType => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
       toast.success('Todoを削除しました。')
     },
+    onError: (error: Error) => {
+      toast.error(error.message)
+    },
   })
 }
