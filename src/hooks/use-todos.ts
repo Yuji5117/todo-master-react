@@ -48,6 +48,9 @@ export const useUpdateTodo = (onClose: () => void): UseUpdateTodoReturnType => {
       onClose()
       toast.success('Todoを更新しました。')
     },
+    onError: (error: Error) => {
+      toast.error(error.message)
+    },
   })
 }
 

@@ -55,8 +55,16 @@ export const updateTodo = async (payload: UpdateTodoPayload): Promise<ApiRespons
 
     const decodedData: ApiResponse<Todo> = await response.json()
 
+    if (!response.ok || !decodedData.success) {
+      throw new Error(decodedData.message)
+    }
+
     return decodedData
   } catch (error) {
+    if (error instanceof Error) {
+      console.error('updateTodo error:', error)
+      throw error
+    }
     console.log('updateTodo error:', error)
     throw new Error('Failed to update todo')
   }
