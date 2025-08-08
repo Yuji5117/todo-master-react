@@ -11,6 +11,7 @@ import {
   type Todo,
   type UpdateTodoPayload,
 } from '../schemas/todo.schema'
+import { SearchQuerySchema } from '../schemas/search.schema'
 
 let todos: Todo[] = [
   {
@@ -125,7 +126,26 @@ export const handlers = [
     try {
       await delay()
       const url = new URL(request.url)
-      const searchQuery = url.searchParams.get('query')
+
+      const rawQuery = url.searchParams.get('query')
+
+      const validation = SearchQuerySchema.safeParse(rawQuery)
+
+      if (!validation.success) {
+        console.error('Invalid search query:', rawQuery, validation.error)
+
+        return HttpResponse.json<ApiResponse<never>>(
+          {
+            success: false,
+            message: '検索クエリが不正です。',
+            errorCode: ErrorCode.INVALID_SEARCH_QUERY,
+            data: null,
+          },
+          { status: 400 },
+        )
+      }
+
+      const searchQuery = validation.data
 
       const filteredTodos = searchQuery
         ? todos.filter(todo => todo.title.toLowerCase().includes(searchQuery.toLowerCase()))
