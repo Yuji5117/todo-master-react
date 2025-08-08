@@ -171,15 +171,27 @@ export const handlers = [
   }),
 
   http.post(paths.app.todos.path, async ({ request }) => {
-    const newTodo = (await request.json()) as CreateNewTodoPayload
-    const todoWithId: Todo = {
-      ...newTodo,
-      id: uuid(),
-      isCompleted: false,
-      createdAt: new Date().toISOString(),
+    try {
+      const newTodo = (await request.json()) as CreateNewTodoPayload
+      const todoWithId: Todo = {
+        ...newTodo,
+        id: uuid(),
+        isCompleted: false,
+        createdAt: new Date().toISOString(),
+      }
+      todos.push(todoWithId)
+      return HttpResponse.json(todoWithId)
+    } catch (error) {
+      console.error('[MSW] Unexpected error in POST todos handler:', error)
+
+      const errorResponse: ApiResponse<never> = {
+        success: false,
+        message: 'Todoの作成中に予期しないエラーが発生しました。',
+        errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
+        data: null,
+      }
+      return HttpResponse.json(errorResponse, { status: 500 })
     }
-    todos.push(todoWithId)
-    return HttpResponse.json(todoWithId)
   }),
 
   http.patch(`${paths.app.todos.path}:id`, async ({ request, params }) => {
