@@ -5,8 +5,7 @@ import { getTodos } from './api/todos'
 import { TodoSection } from './components/TodoSection'
 import { SearchBar } from './components/ui/SearchBar'
 import { useDebounce } from './hooks/use-debounce'
-
-import type { Todo } from './types'
+import type { Todo } from './schemas/todo.schema'
 
 export const App: React.FC = () => {
   const [query, setQuery] = useState<string>('')
