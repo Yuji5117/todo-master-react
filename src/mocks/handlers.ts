@@ -156,7 +156,7 @@ export const handlers = [
         data: filteredTodos,
         message: 'Fetched successfully',
       }
-      return HttpResponse.json(response)
+      return HttpResponse.json(response, { status: 200 })
     } catch (error) {
       console.error('[MSW] Unexpected error in GET todos handler:', error)
 
