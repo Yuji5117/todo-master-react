@@ -146,25 +146,42 @@ export const handlers = [
 
   http.patch(`${paths.app.todos.path}:id`, async ({ request, params }) => {
     const { id } = params
+
+    if (typeof id !== 'string') {
+      return HttpResponse.json<ApiResponse<Todo | null>>(
+        {
+          success: false,
+          message: 'IDが不正です。',
+          errorCode: ErrorCode.ID_MISSING,
+          data: null,
+        },
+        { status: 400 },
+      )
+    }
+
     const updates = (await request.json()) as BaseUpdateTodoPayload
     const index = todos.findIndex(todo => id === todo.id)
     if (index === -1)
-      return HttpResponse.json<ApiResponse<null>>(
+      return HttpResponse.json<ApiResponse<Todo | null>>(
         {
           success: false,
           message: '該当するTodoが存在しません。',
           errorCode: ErrorCode.TODO_NOT_FOUND,
+          data: null,
         },
         { status: 404 },
       )
 
     todos[index] = { ...todos[index], ...updates }
 
-    return HttpResponse.json({
-      data: todos[index],
-      message: 'Todo updated successfully',
-      statusCode: 200,
-    })
+    return HttpResponse.json<ApiResponse<Todo | null>>(
+      {
+        success: true,
+        data: todos[index],
+        message: 'Todo updated successfully',
+      },
+      { status: 200 },
+    )
   }),
 
   http.delete(`${paths.app.todos.path}:id`, async ({ params }) => {

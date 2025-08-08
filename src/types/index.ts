@@ -31,6 +31,7 @@ export type ErrorResponse = {
   success: false
   message: string
   errorCode: ErrorCode
+  data: null
 }
 
 export type SuccessResponse<T> = {
