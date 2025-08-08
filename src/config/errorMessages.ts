@@ -5,4 +5,5 @@ export const errorMesages = {
   [ErrorCode.TODO_NOT_FOUND]: 'The specified todo could not be found.',
   [ErrorCode.TITLE_MISSING]: 'Title is required.',
   [ErrorCode.INTERNAL_SERVER_ERROR]: 'An internal server error occurred.',
+  [ErrorCode.INVALID_SEARCH_QUERY]: 'The search query format is invalid.',
 }
