@@ -14,11 +14,18 @@ export const getTodos = async (query: string): Promise<ApiResponse<Todo[]>> => {
     const response = await fetch(`${paths.app.todos.path}?query=${encodeURIComponent(query)}`, {
       method: 'GET',
     })
-
     const decodedData: ApiResponse<Todo[]> = await response.json()
+
+    if (!response.ok || !decodedData.success) {
+      throw new Error(decodedData.message)
+    }
 
     return decodedData
   } catch (error) {
+    if (error instanceof Error) {
+      console.error('getTodos error:', error)
+      throw error
+    }
     console.log('getTodos error:', error)
     throw new Error('Failed to fetch todos')
   }
