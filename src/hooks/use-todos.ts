@@ -29,6 +29,9 @@ export const UseCreateTodo = (onClose: () => void): UseCreateTodoReturnType => {
       onClose()
       toast.success('新しいTodoを作成しました。')
     },
+    onError: (error: Error) => {
+      toast.error(error.message)
+    },
   })
 }
 

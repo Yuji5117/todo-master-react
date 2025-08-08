@@ -43,8 +43,16 @@ export const createNewTodo = async (newTodo: CreateNewTodoPayload): Promise<ApiR
 
     const decodedData: ApiResponse<Todo> = await response.json()
 
+    if (!response.ok) {
+      throw new Error(decodedData.message)
+    }
+
     return decodedData
   } catch (error) {
+    if (error instanceof Error) {
+      console.error('createNewTodo error:', error)
+      throw error
+    }
     console.log('createNewTodo error:', error)
     throw new Error('Failed to create new todo')
   }
