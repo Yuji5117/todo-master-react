@@ -5,7 +5,12 @@ import { paths } from '../config/paths'
 
 import type { ApiResponse } from '../types'
 import { ErrorCode } from '../config/errorCodes'
-import type { CreateNewTodoPayload, Todo, UpdateTodoPayload } from '../schemas/todo.schema'
+import {
+  type CreateNewTodoPayload,
+  type IdParam,
+  type Todo,
+  type UpdateTodoPayload,
+} from '../schemas/todo.schema'
 
 let todos: Todo[] = [
   {
@@ -148,8 +153,8 @@ export const handlers = [
   http.patch(`${paths.app.todos.path}:id`, async ({ request, params }) => {
     const { id } = params
 
-    if (typeof id !== 'string') {
-      return HttpResponse.json<ApiResponse<Todo | null>>(
+    if (!id) {
+      return HttpResponse.json<ApiResponse<Todo>>(
         {
           success: false,
           message: 'IDが不正です。',
@@ -163,7 +168,7 @@ export const handlers = [
     const updates = (await request.json()) as UpdateTodoPayload
     const index = todos.findIndex(todo => id === todo.id)
     if (index === -1)
-      return HttpResponse.json<ApiResponse<Todo | null>>(
+      return HttpResponse.json<ApiResponse<Todo>>(
         {
           success: false,
           message: '該当するTodoが存在しません。',
@@ -175,7 +180,7 @@ export const handlers = [
 
     todos[index] = { ...todos[index], ...updates }
 
-    return HttpResponse.json<ApiResponse<Todo | null>>(
+    return HttpResponse.json<ApiResponse<Todo>>(
       {
         success: true,
         data: todos[index],
@@ -223,7 +228,7 @@ export const handlers = [
 
     todos = todos.filter(todo => id !== todo.id)
 
-    return HttpResponse.json<ApiResponse<{ id: string }>>(
+    return HttpResponse.json<ApiResponse<IdParam>>(
       {
         success: true,
         message: 'Todo deleted successfully',
