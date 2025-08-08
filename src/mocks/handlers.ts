@@ -6,7 +6,7 @@ import { paths } from '../config/paths'
 import type { ApiResponse } from '../types'
 import { ErrorCode } from '../config/errorCodes'
 import {
-  type CreateNewTodoPayload,
+  CreateNewTodoPayloadSchema,
   type IdParam,
   type Todo,
   type UpdateTodoPayload,
@@ -172,7 +172,25 @@ export const handlers = [
 
   http.post(paths.app.todos.path, async ({ request }) => {
     try {
-      const newTodo = (await request.json()) as CreateNewTodoPayload
+      const rawPayload = await request.json()
+
+      const validation = CreateNewTodoPayloadSchema.safeParse(rawPayload)
+
+      if (!validation.success) {
+        console.error('Invalid todo payload:', rawPayload, validation.error)
+
+        return HttpResponse.json<ApiResponse<never>>(
+          {
+            success: false,
+            message: 'Todo作成データが不正です。',
+            errorCode: ErrorCode.TITLE_MISSING,
+            data: null,
+          },
+          { status: 400 },
+        )
+      }
+
+      const newTodo = validation.data
       const todoWithId: Todo = {
         ...newTodo,
         id: uuid(),
