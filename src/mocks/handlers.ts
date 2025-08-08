@@ -122,20 +122,32 @@ let todos: Todo[] = [
 
 export const handlers = [
   http.get(paths.app.todos.path, async ({ request }) => {
-    await delay()
-    const url = new URL(request.url)
-    const searchQuery = url.searchParams.get('query')
+    try {
+      await delay()
+      const url = new URL(request.url)
+      const searchQuery = url.searchParams.get('query')
 
-    const filteredTodos = searchQuery
-      ? todos.filter(todo => todo.title.toLowerCase().includes(searchQuery.toLowerCase()))
-      : todos
+      const filteredTodos = searchQuery
+        ? todos.filter(todo => todo.title.toLowerCase().includes(searchQuery.toLowerCase()))
+        : todos
 
-    const response: ApiResponse<Todo[]> = {
-      success: true,
-      data: filteredTodos,
-      message: 'Fetched successfully',
+      const response: ApiResponse<Todo[]> = {
+        success: true,
+        data: filteredTodos,
+        message: 'Fetched successfully',
+      }
+      return HttpResponse.json(response)
+    } catch (error) {
+      console.error('[MSW] Unexpected error in GET todos handler:', error)
+
+      const errorResponse: ApiResponse<never> = {
+        success: false,
+        message: 'Todoの取得中に予期しないエラーが発生しました。',
+        errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
+        data: null,
+      }
+      return HttpResponse.json(errorResponse, { status: 500 })
     }
-    return HttpResponse.json(response)
   }),
 
   http.post(paths.app.todos.path, async ({ request }) => {
