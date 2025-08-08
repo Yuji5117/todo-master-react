@@ -15,18 +15,6 @@ export type User = Entity<{
   email: string
 }>
 
-export type Todo = Entity<{
-  title: string
-  memo?: string
-  isCompleted: boolean
-}>
-
-export type CreateNewTodoPayload = Pick<Todo, 'title' | 'memo'>
-
-export type BaseUpdateTodoPayload = Partial<Pick<Todo, 'title' | 'memo' | 'isCompleted'>>
-export type UpdateTodoPayload = Pick<Todo, 'id' | 'title' | 'memo'>
-export type UpdateTodoCompletionPayload = Pick<Todo, 'id' | 'isCompleted'>
-
 export type ErrorResponse = {
   success: false
   message: string

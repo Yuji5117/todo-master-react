@@ -3,8 +3,9 @@ import { v4 as uuid } from 'uuid'
 
 import { paths } from '../config/paths'
 
-import type { ApiResponse, BaseUpdateTodoPayload, CreateNewTodoPayload, Todo } from '../types'
+import type { ApiResponse } from '../types'
 import { ErrorCode } from '../config/errorCodes'
+import type { CreateNewTodoPayload, Todo, UpdateTodoPayload } from '../schemas/todo.schema'
 
 let todos: Todo[] = [
   {
@@ -159,7 +160,7 @@ export const handlers = [
       )
     }
 
-    const updates = (await request.json()) as BaseUpdateTodoPayload
+    const updates = (await request.json()) as UpdateTodoPayload
     const index = todos.findIndex(todo => id === todo.id)
     if (index === -1)
       return HttpResponse.json<ApiResponse<Todo | null>>(

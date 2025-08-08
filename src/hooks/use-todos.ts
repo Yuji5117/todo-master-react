@@ -2,14 +2,15 @@ import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/r
 
 import { createNewTodo, deleteTodo, updateTodo, updateTodoCompletion } from '../api/todos'
 
+import type { ApiResponse } from '../types'
+import { toast } from '../lib/toast'
 import type {
-  ApiResponse,
   CreateNewTodoPayload,
+  IdParam,
   Todo,
   UpdateTodoCompletionPayload,
-  UpdateTodoPayload,
-} from '../types'
-import { toast } from '../lib/toast'
+  UpdateTodoContentPayload,
+} from '../schemas/todo.schema'
 
 type UseCreateTodoReturnType = UseMutationResult<
   ApiResponse<Todo>,
@@ -34,7 +35,7 @@ export const UseCreateTodo = (onClose: () => void): UseCreateTodoReturnType => {
 type UseUpdateTodoReturnType = UseMutationResult<
   ApiResponse<Todo>,
   Error,
-  UpdateTodoPayload,
+  UpdateTodoContentPayload,
   unknown
 >
 
@@ -72,7 +73,7 @@ export const useUpdateTodoCompletion = (): UseUpdateTodoCompletionReturnType => 
   })
 }
 
-type UseDeleteTodoReturnType = UseMutationResult<ApiResponse<string>, Error, string, unknown>
+type UseDeleteTodoReturnType = UseMutationResult<ApiResponse<IdParam>, Error, string, unknown>
 
 export const useDeleteTodo = (): UseDeleteTodoReturnType => {
   const queryClient = useQueryClient()

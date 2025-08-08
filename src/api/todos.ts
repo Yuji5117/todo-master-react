@@ -1,12 +1,13 @@
 import { paths } from '../config/paths'
-
 import type {
-  ApiResponse,
   CreateNewTodoPayload,
+  IdParam,
   Todo,
   UpdateTodoCompletionPayload,
-  UpdateTodoPayload,
-} from '../types'
+  UpdateTodoContentPayload,
+} from '../schemas/todo.schema'
+
+import type { ApiResponse } from '../types'
 
 export const getTodos = async (query: string): Promise<ApiResponse<Todo[]>> => {
   try {
@@ -42,7 +43,7 @@ export const createNewTodo = async (newTodo: CreateNewTodoPayload): Promise<ApiR
   }
 }
 
-export const updateTodo = async (payload: UpdateTodoPayload): Promise<ApiResponse<Todo>> => {
+export const updateTodo = async (payload: UpdateTodoContentPayload): Promise<ApiResponse<Todo>> => {
   try {
     const { id, title, memo } = payload
     const response = await fetch(`${paths.app.todos.path}${id}`, {
@@ -92,7 +93,7 @@ export const updateTodoCompletion = async (
   }
 }
 
-export const deleteTodo = async (id: string): Promise<ApiResponse<string>> => {
+export const deleteTodo = async (id: string): Promise<ApiResponse<IdParam>> => {
   try {
     const response = await fetch(`${paths.app.todos.path}${id}`, {
       method: 'DELETE',
@@ -101,7 +102,7 @@ export const deleteTodo = async (id: string): Promise<ApiResponse<string>> => {
       },
     })
 
-    const decodedData: ApiResponse<string> = await response.json()
+    const decodedData: ApiResponse<IdParam> = await response.json()
 
     if (!response.ok || !decodedData.success) {
       throw new Error(decodedData.message)
