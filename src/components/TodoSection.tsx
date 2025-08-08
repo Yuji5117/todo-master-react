@@ -1,7 +1,7 @@
+import type { Todo } from '../schemas/todo.schema'
 import { TodoList } from './TodoList'
 import { LoadingSpinner } from './ui/LoadingSpinner'
 
-import type { Todo } from '../types'
 
 type TodoSectionProps = {
   isLoading: boolean
