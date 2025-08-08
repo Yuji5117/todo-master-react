@@ -198,7 +198,14 @@ export const handlers = [
         createdAt: new Date().toISOString(),
       }
       todos.push(todoWithId)
-      return HttpResponse.json(todoWithId)
+
+      const response: ApiResponse<Todo> = {
+        success: true,
+        data: todoWithId,
+        message: '新しいTodoを作成しました。',
+      }
+
+      return HttpResponse.json<ApiResponse<Todo>>(response, { status: 201 })
     } catch (error) {
       console.error('[MSW] Unexpected error in POST todos handler:', error)
 
