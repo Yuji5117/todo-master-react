@@ -222,90 +222,113 @@ export const handlers = [
   }),
 
   http.patch(`${paths.app.todos.path}:id`, async ({ request, params }) => {
-    const { id } = params
+    try {
+      const { id } = params
 
-    if (!id) {
+      if (!id) {
+        return HttpResponse.json<ApiResponse<Todo>>(
+          {
+            success: false,
+            message: 'IDが不正です。',
+            errorCode: ErrorCode.ID_MISSING,
+            data: null,
+          },
+          { status: 400 },
+        )
+      }
+
+      const updates = (await request.json()) as UpdateTodoPayload
+      const index = todos.findIndex(todo => id === todo.id)
+      if (index === -1)
+        return HttpResponse.json<ApiResponse<Todo>>(
+          {
+            success: false,
+            message: errorMesages[ErrorCode.TODO_NOT_FOUND],
+            errorCode: ErrorCode.TODO_NOT_FOUND,
+            data: null,
+          },
+          { status: 404 },
+        )
+
+      todos[index] = { ...todos[index], ...updates }
       return HttpResponse.json<ApiResponse<Todo>>(
         {
-          success: false,
-          message: 'IDが不正です。',
-          errorCode: ErrorCode.ID_MISSING,
-          data: null,
+          success: true,
+          data: todos[index],
+          message: successMessages[SuccessCode.TODO_UPDATED],
         },
-        { status: 400 },
+        { status: 200 },
       )
+    } catch (error) {
+      console.error('[MSW] Unexpected error in PATCH todos handler:', error)
+
+      const errorResponse: ApiResponse<never> = {
+        success: false,
+        message: errorMesages[ErrorCode.INTERNAL_SERVER_ERROR],
+        errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
+        data: null,
+      }
+      return HttpResponse.json(errorResponse, { status: 500 })
     }
-
-    const updates = (await request.json()) as UpdateTodoPayload
-    const index = todos.findIndex(todo => id === todo.id)
-    if (index === -1)
-      return HttpResponse.json<ApiResponse<Todo>>(
-        {
-          success: false,
-          message: errorMesages[ErrorCode.TODO_NOT_FOUND],
-          errorCode: ErrorCode.TODO_NOT_FOUND,
-          data: null,
-        },
-        { status: 404 },
-      )
-
-    todos[index] = { ...todos[index], ...updates }
-
-    return HttpResponse.json<ApiResponse<Todo>>(
-      {
-        success: true,
-        data: todos[index],
-        message: successMessages[SuccessCode.TODO_UPDATED],
-      },
-      { status: 200 },
-    )
   }),
 
   http.delete(`${paths.app.todos.path}:id`, async ({ params }) => {
-    const { id } = params
+    try {
+      const { id } = params
 
-    if (!id) {
-      return HttpResponse.json(
+      if (!id) {
+        return HttpResponse.json(
+          {
+            success: false,
+            message: '削除対象のIDが指定されていません。',
+            errorCode: ErrorCode.ID_MISSING,
+          },
+          { status: 400 },
+        )
+      }
+
+      if (typeof id !== 'string') {
+        return HttpResponse.json(
+          {
+            success: false,
+            message: 'IDの形式が不正です。',
+            errorCode: ErrorCode.ID_MISSING,
+          },
+          { status: 400 },
+        )
+      }
+
+      const index = todos.findIndex(todo => id === todo.id)
+      if (index === -1)
+        return HttpResponse.json(
+          {
+            success: false,
+            message: errorMesages[ErrorCode.TODO_NOT_FOUND],
+            errorCode: ErrorCode.TODO_NOT_FOUND,
+          },
+          { status: 404 },
+        )
+
+      todos = todos.filter(todo => id !== todo.id)
+
+      return HttpResponse.json<ApiResponse<IdParam>>(
         {
-          success: false,
-          message: '削除対象のIDが指定されていません。',
-          errorCode: ErrorCode.ID_MISSING,
+          success: true,
+          message: successMessages[SuccessCode.TODO_DELETED],
+          data: { id },
         },
-        { status: 400 },
+        { status: 200 },
       )
+    } catch (error) {
+      console.error('[MSW] Unexpected error in DELETE todos handler:', error)
+
+      const errorResponse: ApiResponse<never> = {
+        success: false,
+        message: errorMesages[ErrorCode.INTERNAL_SERVER_ERROR],
+        errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
+        data: null,
+      }
+      return HttpResponse.json(errorResponse, { status: 500 })
     }
-
-    if (typeof id !== 'string') {
-      return HttpResponse.json(
-        {
-          success: false,
-          message: 'IDの形式が不正です。',
-          errorCode: ErrorCode.ID_MISSING,
-        },
-        { status: 400 },
-      )
-    }
-
-    const index = todos.findIndex(todo => id === todo.id)
-    if (index === -1)
-      return HttpResponse.json(
-        {
-          success: false,
-          message: errorMesages[ErrorCode.TODO_NOT_FOUND],
-          errorCode: ErrorCode.TODO_NOT_FOUND,
-        },
-        { status: 404 },
-      )
-
-    todos = todos.filter(todo => id !== todo.id)
-
-    return HttpResponse.json<ApiResponse<IdParam>>(
-      {
-        success: true,
-        message: successMessages[SuccessCode.TODO_DELETED],
-        data: { id },
-      },
-      { status: 200 },
-    )
   }),
 ]
