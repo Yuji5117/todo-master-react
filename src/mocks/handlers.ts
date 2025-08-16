@@ -13,6 +13,7 @@ import {
 } from '../schemas/todo.schema'
 import { SearchQuerySchema } from '../schemas/search.schema'
 import { errorMesages } from '../config/errorMessages'
+import { SuccessCode, successMessages } from '../config/successMessages'
 
 let todos: Todo[] = [
   {
@@ -155,7 +156,7 @@ export const handlers = [
       const response: ApiResponse<Todo[]> = {
         success: true,
         data: filteredTodos,
-        message: 'Fetched successfully',
+        message: successMessages[SuccessCode.TODOS_FETCHED],
       }
       return HttpResponse.json(response, { status: 200 })
     } catch (error) {
@@ -203,7 +204,7 @@ export const handlers = [
       const response: ApiResponse<Todo> = {
         success: true,
         data: todoWithId,
-        message: '新しいTodoを作成しました。',
+        message: successMessages[SuccessCode.TODO_CREATED],
       }
 
       return HttpResponse.json<ApiResponse<Todo>>(response, { status: 201 })
@@ -254,7 +255,7 @@ export const handlers = [
       {
         success: true,
         data: todos[index],
-        message: 'Todo updated successfully',
+        message: successMessages[SuccessCode.TODO_UPDATED],
       },
       { status: 200 },
     )
@@ -301,7 +302,7 @@ export const handlers = [
     return HttpResponse.json<ApiResponse<IdParam>>(
       {
         success: true,
-        message: 'Todo deleted successfully',
+        message: successMessages[SuccessCode.TODO_DELETED],
         data: { id },
       },
       { status: 200 },
