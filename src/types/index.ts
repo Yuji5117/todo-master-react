@@ -1,31 +1,16 @@
-export type BaseEntity = {
-  id: string
-  createdAt: string
+import type { ErrorCode } from '../config/errorCodes'
+
+export type ErrorResponse = {
+  success: false
+  message: string
+  errorCode: ErrorCode
+  data: null
 }
 
-export type Entity<T> = {
-  [K in keyof T]: T[K]
-} & BaseEntity
-
-export type User = Entity<{
-  firstName: string
-  lastName: string
-  email: string
-}>
-
-export type Todo = Entity<{
-  title: string
-  memo?: string
-  isCompleted: boolean
-}>
-
-export type CreateNewTodoPayload = Pick<Todo, 'title' | 'memo'>
-
-export type UpdateTodoCompletionPayload = Pick<Todo, 'id' | 'isCompleted'>
-
-export type ApiResponse<T> = {
+export type SuccessResponse<T> = {
+  success: true
   data: T
   message: string
-  error?: string | null
-  statusCode: number
 }
+
+export type ApiResponse<T> = SuccessResponse<T> | ErrorResponse

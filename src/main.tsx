@@ -4,6 +4,8 @@ import { createRoot } from 'react-dom/client'
 
 import './app.css'
 import { App } from './App.tsx'
+import { Layout } from './components/Layout.tsx'
+import { ToastProvider } from './contexts/ToastProvider.tsx'
 
 const enableMocking = async () => {
   if (!import.meta.env.DEV) return
@@ -19,7 +21,11 @@ enableMocking().then(() => {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <ToastProvider>
+          <Layout>
+            <App />
+          </Layout>
+        </ToastProvider>
       </QueryClientProvider>
     </StrictMode>,
   )
