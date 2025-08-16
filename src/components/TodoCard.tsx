@@ -7,8 +7,7 @@ import { Modal } from './ui/Modal'
 import { UpdateTodoForm } from './UpdateTodoForm'
 import { useModal } from '../hooks/use-modal'
 import { useDeleteTodo, useUpdateTodoCompletion } from '../hooks/use-todos'
-
-import type { Todo } from '../types'
+import type { Todo } from '../schemas/todo.schema'
 
 export type TodoCardType = {
   todo: Todo

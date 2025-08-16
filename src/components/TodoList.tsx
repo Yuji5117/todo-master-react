@@ -1,6 +1,5 @@
+import type { Todo } from '../schemas/todo.schema'
 import { TodoCard } from './TodoCard'
-
-import type { Todo } from '../types'
 
 type TodoListProps = {
   todos: Todo[]

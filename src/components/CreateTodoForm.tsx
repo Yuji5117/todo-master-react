@@ -3,8 +3,7 @@ import { useState } from 'react'
 import { Button } from './ui/Button'
 import { Form } from './ui/Form'
 import { UseCreateTodo } from '../hooks/use-todos'
-
-import type { CreateNewTodoPayload } from '../types'
+import type { CreateNewTodoPayload } from '../schemas/todo.schema'
 
 export type CreateTodoFormProps = {
   onClose: () => void

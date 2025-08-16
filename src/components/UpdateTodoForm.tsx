@@ -3,8 +3,7 @@ import { useState } from 'react'
 import { Button } from './ui/Button'
 import { Form } from './ui/Form'
 import { useUpdateTodo } from '../hooks/use-todos'
-
-import type { UpdateTodoPayload } from '../types'
+import type { UpdateTodoPayload } from '../schemas/todo.schema'
 
 export type UpdateTodoFormProps = {
   id: string
