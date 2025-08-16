@@ -12,6 +12,7 @@ import {
   type UpdateTodoPayload,
 } from '../schemas/todo.schema'
 import { SearchQuerySchema } from '../schemas/search.schema'
+import { errorMesages } from '../config/errorMessages'
 
 let todos: Todo[] = [
   {
@@ -162,7 +163,7 @@ export const handlers = [
 
       const errorResponse: ApiResponse<never> = {
         success: false,
-        message: 'Todoの取得中に予期しないエラーが発生しました。',
+        message: errorMesages[ErrorCode.INTERNAL_SERVER_ERROR],
         errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
         data: null,
       }
@@ -211,7 +212,7 @@ export const handlers = [
 
       const errorResponse: ApiResponse<never> = {
         success: false,
-        message: 'Todoの作成中に予期しないエラーが発生しました。',
+        message: errorMesages[ErrorCode.INTERNAL_SERVER_ERROR],
         errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
         data: null,
       }
@@ -240,7 +241,7 @@ export const handlers = [
       return HttpResponse.json<ApiResponse<Todo>>(
         {
           success: false,
-          message: '該当するTodoが存在しません。',
+          message: errorMesages[ErrorCode.TODO_NOT_FOUND],
           errorCode: ErrorCode.TODO_NOT_FOUND,
           data: null,
         },
@@ -289,7 +290,7 @@ export const handlers = [
       return HttpResponse.json(
         {
           success: false,
-          message: '該当するTodoが存在しません。',
+          message: errorMesages[ErrorCode.TODO_NOT_FOUND],
           errorCode: ErrorCode.TODO_NOT_FOUND,
         },
         { status: 404 },
